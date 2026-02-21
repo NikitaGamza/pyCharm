@@ -1,7 +1,8 @@
 from typing import List, Dict, Union
 
 
-def filter_by_state(proc: List[Dict[str, Union[str | int]]], state: str = "EXECUTED") -> List[Dict[str, Union[str | int]]]:
+def filter_by_state(proc: List[Dict[str, Union[str | int]]],
+                    state: str = "EXECUTED") -> List[Dict[str, Union[str | int]]]:
     """Функция фильтрации по состоянию"""
     return [item for item in proc if item.get("state") == state]
 
