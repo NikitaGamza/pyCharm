@@ -11,3 +11,8 @@
 2. Установка зависимостей:
     ```bash
    pip install
+Список пакетов:
+- flake8,
+- black,
+- isort,
+- mypy
