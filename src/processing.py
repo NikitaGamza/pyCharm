@@ -8,4 +8,4 @@ def filter_by_state(operations: List[Dict[str, str | int]], state: str = "EXECUT
 
 def sort_by_date(operations: List[Dict[str, str | int]], sequence: bool = False) -> List[Dict[str, str | int]]:
     """Функция сортировки по дате"""
-    return sorted(operations, key=lambda x: x["date"][:11], reverse=sequence)
+    return sorted(operations, key=lambda date: date["date"][:11], reverse=sequence)
