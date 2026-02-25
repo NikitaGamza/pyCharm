@@ -6,6 +6,6 @@ def filter_by_state(operations: List[Dict[str, str | int]], state: str = "EXECUT
     return [item for item in operations if item.get("state") == state]
 
 
-def sort_by_date(operations: List[Dict[str, str | int]], sequence: bool = False) -> List[Dict[str, str | int]]:
+def sort_by_date(operations: List[Dict[str, str]], reverse : bool = True) -> List[Dict[str, str]]:
     """Функция сортировки по дате"""
-    return sorted(operations, key=lambda date: date["date"][:11], reverse=sequence)
+    return sorted(operations, key=lambda item : item ["date"], reverse=reverse )
