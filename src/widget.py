@@ -1,7 +1,7 @@
 from src.masks import get_mask_account, get_mask_card_number
 
 
-def mask_account_card(acc_info: str) -> str|None:
+def mask_account_card(acc_info: str) -> str | None:
     if acc_info[0:4] == "Счет":
         slice_num = int(acc_info[5:])
         masked = get_mask_account(slice_num)
