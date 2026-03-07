@@ -16,3 +16,8 @@
 - black,
 - isort,
 - mypy
+- pytest
+
+3. Запуск тестирования
+   ```bash
+   pytest
