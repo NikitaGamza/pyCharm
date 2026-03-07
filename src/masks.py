@@ -12,7 +12,7 @@ def get_mask_card_number(cart_number: int) -> Union[str, None]:
         sliced_2 = cart_str[4:6]
         sliced_2 = sliced_2 + "**"
         sliced_3 = "****"
-        sliced_4 = cart_str[8:12]
+        sliced_4 = cart_str[12:]
         return f"{sliced_1} {sliced_2} {sliced_3} {sliced_4}"
 
 
