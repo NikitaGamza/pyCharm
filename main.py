@@ -29,7 +29,5 @@ from src.generators import card_number_generator
 # )
 
 
-new_card = card_number_generator(10003, 10001)
-print(next(new_card))
-print(next(new_card))
-print(next(new_card))
+new_card = list(card_number_generator(10003, 10001))
+print(new_card)

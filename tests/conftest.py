@@ -94,3 +94,11 @@ def filtered_currency():
 @pytest.fixture
 def description_list():
     return ["Перевод организации", "Перевод организации", "Перевод со счета на счет"]
+
+@pytest.fixture
+def card_list():
+    return ["0000 0000 0000 9999", "0000 0000 0001 0000", "0000 0000 0001 0001"]
+
+@pytest.fixture
+def incorrect_data():
+    return "Некорректные данные"
