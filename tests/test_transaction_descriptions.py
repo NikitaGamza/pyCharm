@@ -1,7 +1,8 @@
+import pytest
 from src.generators import transaction_descriptions
 
-def test_transaction_descriptions(description_list):
-    result = list(transaction_descriptions([
+@pytest.mark.parametrize("trans_list, expected", [
+    ([
         {
             "id": 939719570,
             "state": "EXECUTED",
@@ -46,6 +47,8 @@ def test_transaction_descriptions(description_list):
             "description": "Перевод со счета на счет",
             "from": "Счет 19708645243227258542",
             "to": "Счет 75651667383060284188"
-        }]))
-
-    assert result == description_list
+        }], ["Перевод организации", "Перевод организации", "Перевод со счета на счет"])
+])
+def test_transaction_descriptions(trans_list,expected):
+    result = list(transaction_descriptions(trans_list))
+    assert result == expected
