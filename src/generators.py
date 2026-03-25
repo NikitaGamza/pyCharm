@@ -9,13 +9,21 @@ def filter_by_currency(transactions: List[Dict[str, Any]], currency: str) -> Gen
 
 
 def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Generator:
+    """Генератор вывода описания транзакции"""
     for transaction in transactions:
         yield transaction["description"]
 
 
 def card_number_generator(start: int, end: int) -> Any:
+    """Генератор номеров карт"""
     if start > end:
         return "Некорректные данные"
-    else:
-        for i in range(start, end):
-            yield str(i)
+    while start <= end:
+        generate = str(start).zfill(16)
+        slice1 = generate[:4]
+        slice2 = generate[4:8]
+        slice3 = generate[8:12]
+        slice4 = generate[12:]
+        yield f"{slice1} {slice2} {slice3} {slice4}"
+        start += 1
+    return None
