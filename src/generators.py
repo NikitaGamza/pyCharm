@@ -12,7 +12,8 @@ def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Generator:
     for transaction in transactions:
         yield transaction["description"]
 
-def card_number_generator(start: int, end: int) -> Generator:
+
+def card_number_generator(start: int, end: int) -> Any:
     if start > end:
         return "Некорректные данные"
     else:
