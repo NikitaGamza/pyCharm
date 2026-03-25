@@ -11,3 +11,10 @@ def filter_by_currency(transactions: List[Dict[str, Any]], currency: str) -> Gen
 def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Generator:
     for transaction in transactions:
         yield transaction["description"]
+
+def card_number_generator(start: int, end: int) -> Generator:
+    if start > end:
+        return "Некорректные данные"
+    else:
+        for i in range(start, end):
+            yield str(i)
