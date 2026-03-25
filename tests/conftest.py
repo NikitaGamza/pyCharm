@@ -90,3 +90,7 @@ def filtered_currency():
             "to": "Счет 75651667383060284188"
         }
     ]
+
+@pytest.fixture
+def description_list():
+    return ["Перевод организации", "Перевод организации", "Перевод со счета на счет"]
