@@ -1,10 +1,14 @@
 from src.decorators import log
 import pytest
+import os
 
 
-def test_log():
-    @log()
-    def div(a, b):
-        return a / b
-    with pytest.raises(Exception, match='div error: division by zero. Inputs: (2, 0), {}'):
-        div(2, 0)
+@log()
+def multiplication_function(x, y):
+    return x * y
+
+
+def test_log_to_console(capsys):
+    multiplication_function(3, 0)
+    captured = capsys.readouterr()
+    assert "multiplication_function: ZeroDivisionError. Inputs: (3, 0), {}" in captured.out
