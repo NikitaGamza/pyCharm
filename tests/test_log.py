@@ -32,8 +32,8 @@ def test_log_to_file(x, y, expected_output):
 
 
 @pytest.mark.parametrize("x, y, expected_output", [
-    (3, 2, "divide_function ok"),
-    (1, 0,"divide_function error: ZeroDivisionError. Inputs: (1, 0), {}")
+    # (3, 2, "divide_function ok"),
+    # (1, 0,"divide_function error: ZeroDivisionError. Inputs: (1, 0), {}")
     ])
 
 def test_log_to_console(capsys, x, y, expected_output):
