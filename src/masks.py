@@ -1,9 +1,9 @@
 from black.comments import Union
 import logging
 
-logger = logging.getLogger("mask_card")
+logger = logging.getLogger("masks")
 logger.setLevel(logging.INFO)
-file_handler = logging.FileHandler("logs/mask_card.log", 'w', encoding="utf-8")
+file_handler = logging.FileHandler("logs/masks.log", 'w', encoding="utf-8")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
@@ -36,3 +36,4 @@ def get_mask_account(acc_number: int) -> Union[str, None]:
         sliced = acc_str[-4:]
         logger.info(f'Замаскированный аккаунт: {sliced}')
         return f"**{sliced}"
+
