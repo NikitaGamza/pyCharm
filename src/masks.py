@@ -29,8 +29,10 @@ def get_mask_account(acc_number: int) -> Union[str, None]:
     """Функция маскировки аккаунта"""
     if len(str(acc_number)) < 20 or len(str(acc_number)) > 20:
         print("Некорректный ввод")
+        logger.error("Некорректный ввод")
         return None
     else:
         acc_str = str(acc_number)
         sliced = acc_str[-4:]
+        logger.info(f'Замаскированный аккаунт: {sliced}')
         return f"**{sliced}"
