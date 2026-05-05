@@ -1,6 +1,6 @@
 import logging
 
-from black.comments import Union
+from typing import Union
 
 logger = logging.getLogger("masks")
 logger.setLevel(logging.INFO)
