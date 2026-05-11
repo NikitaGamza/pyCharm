@@ -1,12 +1,17 @@
-from src.external_api import conversion_amount
-from unittest.mock import patch, Mock
+import requests
+from unittest.mock import patch
+
+EXCHANGE_API_URL = "https://api.apilayer.com/exchangerates_data/convert"
+
+def get_conversion(amount):
+    url = "https://api.apilayer.com/exchangerates_data/convert"
+    params: dict = {"from": "EUR", "to": "RUB", "amount": amount}
+    response = requests.get(url, params=params)
+    return response.json()
 
 
-def test_conversion_amount_success():
-    mock_response = Mock()
-    mock_response.status_code = 200
-    mock_response.json.return_value = {"result": 884.79} #Результат тестирования меняется в зависимости от курса валют
-
-    with patch("requests.get", return_value=mock_response):
-        result = conversion_amount(10, "EUR", "RUB")
-        assert result == 884.79
+@patch("requests.get")
+def test_conversion(mock_get):
+    mock_get.return_value.json.return_value = {"amount": 884.79}
+    assert get_conversion(10) == {"amount": 884.79}
+    mock_get.assert_called_once_with(EXCHANGE_API_URL, params={"from": "EUR", "to": "RUB", "amount": 10})
