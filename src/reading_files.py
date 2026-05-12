@@ -10,7 +10,7 @@ PATH_TO_FILE_CSV = os.path.join(ROOT_DIR, "data", "transactions.csv")
 
 
 def read_excel_file(address: str) -> Any:
-    """Чтоение финансовых операций excel файла"""
+    """Чтение финансовых операций excel файла"""
     try:
         pd_file = pd.read_excel(address)
         result = pd_file.fillna("").to_dict(orient="records")
