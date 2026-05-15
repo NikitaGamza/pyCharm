@@ -23,7 +23,6 @@ def conversion_amount(amount: float, base_currency: str, target_currency: str = 
 
     try:
         response = requests.request("GET", url, headers=headers, data=payload, params=params)
-        print(f"Ответ от API: {response.text}")
         if response.status_code == 200:
             data = response.json()
             return round(float(data["result"]), 2)
@@ -36,19 +35,9 @@ def conversion_amount(amount: float, base_currency: str, target_currency: str = 
     return None
 
 
-# transaction_rub = {"operationAmount": {"amount": "1000", "currency": {"code": "RUB"}}}
-# transaction_usd = {"operationAmount": {"amount": "50", "currency": {"code": "USD"}}}
-# transaction_eur = {"operationAmount": {"amount": "30", "currency": {"code": "EUR"}}}
+transaction_eur = {"operationAmount": {"amount": "10", "currency": {"code": "EUR"}}}
+
 
 # print(conversion_amount(float(
-#     transaction_rub["operationAmount"]["amount"]),
-#     transaction_rub["operationAmount"]["currency"]["code"].upper()),
-#     "RUB")  # 1000.0
-# print(conversion_amount(float(
-#     transaction_usd["operationAmount"]["amount"]),
-#     transaction_usd["operationAmount"]["currency"]["code"].upper()),
-#     "RUB")  # 1000.0
-# print(conversion_amount(float(
 #     transaction_eur["operationAmount"]["amount"]),
-#     transaction_eur["operationAmount"]["currency"]["code"].upper()),
-#     "RUB")
+#     transaction_eur["operationAmount"]["currency"]["code"].upper()))

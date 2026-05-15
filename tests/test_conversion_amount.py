@@ -1,17 +1,28 @@
 import requests
-from unittest.mock import patch
+# from unittest.mock import patch
+from src.external_api import conversion_amount
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+
+API_KEY = os.getenv("API_KEY")
 EXCHANGE_API_URL = "https://api.apilayer.com/exchangerates_data/convert"
 
 def get_conversion(amount):
     url = "https://api.apilayer.com/exchangerates_data/convert"
     params: dict = {"from": "EUR", "to": "RUB", "amount": amount}
-    response = requests.get(url, params=params)
-    return response.json()
+    payload: dict = {}
+    headers = {"apikey": API_KEY}
+    response = requests.get(url, headers=headers, data=payload, params=params)
+    data = response.json()
+    return round(float(data["result"]), 2)
 
 
-@patch("requests.get")
-def test_conversion(mock_get):
-    mock_get.return_value.json.return_value = {"amount": 884.79}
-    assert get_conversion(10) == {"amount": 884.79}
-    mock_get.assert_called_once_with(EXCHANGE_API_URL, params={"from": "EUR", "to": "RUB", "amount": 10})
+# @patch("requests.get")
+def test_conversion():
+    transaction_eur = {"operationAmount": {"amount": "10", "currency": {"code": "EUR"}}}
+
+    assert get_conversion(10) == conversion_amount(float(
+        transaction_eur["operationAmount"]["amount"]),
+        transaction_eur["operationAmount"]["currency"]["code"].upper())
