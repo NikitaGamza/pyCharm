@@ -1,6 +1,6 @@
 import re
-from typing import Dict, List
 from collections import Counter
+from typing import Dict, List
 
 
 def process_bank_search(data: List[Dict], search: str) -> List[Dict]:
@@ -13,10 +13,11 @@ def process_bank_search(data: List[Dict], search: str) -> List[Dict]:
     ]
     return result
 
+
 def process_bank_operations(data: List[Dict], categories: list) -> dict:
     """
-       Функция вывода количества операций в каждой категории.
+    Функция вывода количества операций в каждой категории.
     """
-    descriptions = [transaction['description'] for transaction in data]
+    descriptions = [transaction["description"] for transaction in data]
     filtered_descriptions = [desc for desc in descriptions if desc in categories]
     return dict(Counter(filtered_descriptions))
