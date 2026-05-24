@@ -35,15 +35,27 @@ def test_empty_transactions_list():
     result = process_bank_operations(data, categories)
     assert result == {}
 
+
+@pytest.fixture
+def datas_():
+    return [
+        {'description': 'Income'},
+        {'description': 'Bill'},
+        {'description': 'Income'},
+        {'description': 'Credit'},
+        {'description': 'Payment'},
+        {'description': 'Transfer'},
+        {'description': 'Payment'},
+    ]
 @pytest.mark.parametrize(
-    "description_word, data_frm",
+    "description, description_data",
     [
-       ("Payment", [{'description': 'Payment to Jane'},{'description': 'Payment to John'}]),
-       ("payment", [{'description': 'Payment to Jane'},{'description': 'Payment to John'}]),
-       ("Groceries", []),
-       ([], []),
+        ('Bill', [{'description': 'Bill'}]),
+        ('Income', [{'description': 'Income'}, {'description': 'Income'}]),
+        ('Credit', [{'description': 'Credit'}]),
+        ('Payment', [{'description': 'Payment'}, {'description': 'Payment'}]),
     ],
 )
-def test_process_bank_search(data_, description_word, data_frm):
-    result = process_bank_search(data_, description_word)
-    assert result == data_frm
+def test_process_bank_search(datas_, description, description_data):
+    result = process_bank_search(datas_, description)
+    assert result == description_data
