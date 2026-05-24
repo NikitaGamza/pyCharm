@@ -1,6 +1,6 @@
 import pytest
 
-from src.process_bank import process_bank_operations
+from src.process_bank import process_bank_operations, process_bank_search
 
 
 @pytest.fixture
@@ -14,6 +14,7 @@ def data_():
         {'description': 'Transfer'},
         {'description': 'Payment'},
     ]
+
 @pytest.mark.parametrize(
     "categories, categories_num",
     [
@@ -33,3 +34,16 @@ def test_empty_transactions_list():
     categories = ['Income', 'Bill']
     result = process_bank_operations(data, categories)
     assert result == {}
+
+@pytest.mark.parametrize(
+    "description_word, data_frm",
+    [
+       ("Payment", [{'description': 'Payment to Jane'},{'description': 'Payment to John'}]),
+       ("payment", [{'description': 'Payment to Jane'},{'description': 'Payment to John'}]),
+       ("Groceries", []),
+       ([], []),
+    ],
+)
+def test_process_bank_search(data_, description_word, data_frm):
+    result = process_bank_search(data_, description_word)
+    assert result == data_frm
