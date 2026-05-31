@@ -1,36 +1,83 @@
 from src.reading_files import read_csv_file, read_excel_file
 from src.utils import info_bank_operations
+from src.processing import filter_by_state, sort_by_date
+from src.process_bank import process_bank_search
+from src.generators import filter_by_currency
 import os
 
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
-PATH_TO_FILE_JSON = os.path.join(ROOT_DIR, "data", "operations.json")
-PATH_TO_FILE_XLSX = os.path.join(ROOT_DIR, "data", "transactions_excel.xlsx")
-PATH_TO_FILE_CSV = os.path.join(ROOT_DIR, "data", "transactions.csv")
+PATH_TO_FILE_JSON = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "operations.json")
+PATH_TO_FILE_XLSX = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions_excel.xlsx")
+PATH_TO_FILE_CSV = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions.csv")
 
-def start():
+
+def choice():
     print("""Программа: Привет! Добро пожаловать в программу работы
-            с банковскими транзакциями.
-            Выберите необходимый пункт меню:
-            1. Получить информацию о транзакциях из JSON-файла
-            2. Получить информацию о транзакциях из CSV-файла
-            3. Получить информацию о транзакциях из XLSX-файла""")
+                с банковскими транзакциями.
+                Выберите необходимый пункт меню:
+                1. Получить информацию о транзакциях из JSON-файла
+                2. Получить информацию о транзакциях из CSV-файла
+                3. Получить информацию о транзакциях из XLSX-файла""")
     file_choice = int(input())
     # if not isinstance(file_choice, int):
     #     print("Некорректный ввод")
     if file_choice == 1:
         result = info_bank_operations(PATH_TO_FILE_JSON)
-        print(result)
+        print("Программа: Для обработки выбран JSON-файл.")
         return result
     elif file_choice == 2:
         result = read_csv_file(PATH_TO_FILE_CSV)
-        print(result)
+        print("Программа: Для обработки выбран CSV-файл.")
         return result
     elif file_choice == 3:
         result = read_excel_file(PATH_TO_FILE_XLSX)
-        print(result)
+        print("Программа: Для обработки выбран XLSX-файл.")
         return result
     else:
         print("Неверный ввод")
     return 'end'
+
+def start():
+    result = choice()
+    print("""Введите статус, по которому необходимо выполнить фильтрацию. 
+            Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING""")
+    state_choice = input().upper()
+    if state_choice != "EXECUTED" and state_choice != "CANCELED" and state_choice != "PENDING":
+        print(f'Статус операции "{state_choice}" недоступен.')
+        print("""Введите статус, по которому необходимо выполнить фильтрацию. 
+                Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING
+            """)
+    else:
+        result = filter_by_state(result, state_choice)
+    print("Отсортировать операции по дате? Да/Нет")
+    sort_choice = input().upper()
+    print("Отсортировать по возрастанию или по убыванию?")
+    sort_seq = input().upper()
+    if sort_choice == "ДА" and sort_seq == "ПО УБЫВАНИЮ":
+        result = sort_by_date(result, True)
+    elif sort_choice == "ДА" and sort_seq == "ПО ВОЗРАСТАНИЮ":
+        result = sort_by_date(result, False)
+    else:
+        print("Некорректный ввод")
+    print("Выводить только рублевые транзакции? Да/Нет")
+    value_choice = input().upper()
+    if value_choice == "ДА":
+        result = list(filter_by_currency(result, "RUB"))
+    elif value_choice == "НЕТ":
+        pass
+    else:
+        print("Некорректный ввод")
+    print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет")
+    word_choice = input().upper()
+    if word_choice == "ДА":
+        print("Введите слово")
+        word_pattern = input()
+        result = process_bank_search(result, word_pattern)
+    if len(result) > 0:
+        print(f'Всего банковских операций в выборке: ${len(result)}')
+        print(result)
+    else:
+        print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+    return result
 
 start()
