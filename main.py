@@ -1,5 +1,5 @@
 import os
-from typing import Any
+from typing import Any, List, Optional
 
 from src.generators import filter_by_currency
 from src.process_bank import process_bank_search
@@ -11,6 +11,32 @@ ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 PATH_TO_FILE_JSON = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "operations.json")
 PATH_TO_FILE_XLSX = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions_excel.xlsx")
 PATH_TO_FILE_CSV = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions.csv")
+
+class Product:
+    """Класс продукции"""
+    name: str
+    description: str
+    price: float
+    quantity: int
+    def __init__(self, name: str, description: str, price: float, quantity: int):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.quantity = quantity
+
+class Category:
+    """Класс категорий продукта"""
+    name: str
+    description: str
+    products: List[Product]
+    category_count: int = 0
+    def __init__(self, name: str, description: str, products: Optional[List[Product]] = None) -> None:
+        self.name = name
+        self.description = description
+        self.products = products if products is not None else []
+        Category.category_count += 1
+    def product_count(self):
+        return len(self.products)
 
 
 def choice() -> Any:
@@ -109,4 +135,13 @@ def start() -> Any:
     return result
 
 
-start()
+# start()
+prod1 = Product("Кровать", "Мягкая", 100.5, 12)
+prod2 = Product("Кровать", "Большая", 120.0, 13)
+cat1 = Category("Спальня", "товары для сна", [prod1, prod2])
+cat2 = Category("Сантехника", "товары для сантехники", [prod1, prod2])
+cat3 = Category("Смартфоны", "товары для сантехники", [prod1, prod2])
+print(cat1.name)
+print(cat1.description)
+print(cat1.category_count)
+print(cat1.product_count())
