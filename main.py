@@ -62,17 +62,17 @@ def start():
         sort_choice = input().upper()
         if sort_choice != "ДА" and sort_choice != "НЕТ":
             print("Некорректный ввод")
-
-    print("Отсортировать по возрастанию или по убыванию?")
-    sort_seq = ""
-    while sort_seq != "ПО ВОЗРАСТАНИЮ" and sort_seq != "ПО УБЫВАНИЮ":
-        sort_seq = input().upper()
-        if sort_seq != "ПО ВОЗРАСТАНИЮ" and sort_seq != "ПО УБЫВАНИЮ":
-            print("Некорректный ввод")
-    if sort_choice == "ДА" and sort_seq == "ПО УБЫВАНИЮ":
-        result = sort_by_date(result, True)
-    else:
-        result = sort_by_date(result, False)
+    if sort_choice == "ДА":
+        print("Отсортировать по возрастанию или по убыванию?")
+        sort_seq = ""
+        while sort_seq != "ПО ВОЗРАСТАНИЮ" and sort_seq != "ПО УБЫВАНИЮ":
+            sort_seq = input().upper()
+            if sort_seq != "ПО ВОЗРАСТАНИЮ" and sort_seq != "ПО УБЫВАНИЮ":
+                print("Некорректный ввод")
+        if sort_choice == "ДА" and sort_seq == "ПО УБЫВАНИЮ":
+            result = sort_by_date(result, True)
+        else:
+            result = sort_by_date(result, False)
 
     print("Выводить только рублевые транзакции? Да/Нет")
     value_choice = ""
@@ -99,7 +99,7 @@ def start():
 
     if len(result) > 0:
         print(f'Всего банковских операций в выборке: ${len(result)}')
-        print(result)
+        print(*result, sep="\n")
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     return result
