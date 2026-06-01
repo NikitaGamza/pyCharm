@@ -12,6 +12,10 @@ PATH_TO_FILE_CSV = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions
 
 
 def choice():
+    """Главная точка входа
+    Выбирает файл с транзакциями.
+    Фильтрует по статусу, валюте и слову в описании транзакции
+    Сортирует по дате"""
     print("""Программа: Привет! Добро пожаловать в программу работы
                 с банковскими транзакциями.
                 Выберите необходимый пункт меню:
@@ -41,38 +45,58 @@ def start():
     result = choice()
     print("""Введите статус, по которому необходимо выполнить фильтрацию. 
             Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING""")
-    state_choice = input().upper()
-    if state_choice != "EXECUTED" and state_choice != "CANCELED" and state_choice != "PENDING":
-        print(f'Статус операции "{state_choice}" недоступен.')
-        print("""Введите статус, по которому необходимо выполнить фильтрацию. 
+    state_choice = ""
+    while state_choice != "EXECUTED" and state_choice != "CANCELED" and state_choice != "PENDING":
+        state_choice = input().upper()
+        if state_choice != "EXECUTED" and state_choice != "CANCELED" and state_choice != "PENDING":
+            print(f'Статус операции "{state_choice}" недоступен.')
+            print("""Введите статус, по которому необходимо выполнить фильтрацию. 
                 Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING
-            """)
-    else:
-        result = filter_by_state(result, state_choice)
+                """)
+        else:
+            result = filter_by_state(result, state_choice)
+
     print("Отсортировать операции по дате? Да/Нет")
-    sort_choice = input().upper()
+    sort_choice = ""
+    while sort_choice != "ДА" and sort_choice != "НЕТ":
+        sort_choice = input().upper()
+        if sort_choice != "ДА" and sort_choice != "НЕТ":
+            print("Некорректный ввод")
+
     print("Отсортировать по возрастанию или по убыванию?")
-    sort_seq = input().upper()
+    sort_seq = ""
+    while sort_seq != "ПО ВОЗРАСТАНИЮ" and sort_seq != "ПО УБЫВАНИЮ":
+        sort_seq = input().upper()
+        if sort_seq != "ПО ВОЗРАСТАНИЮ" and sort_seq != "ПО УБЫВАНИЮ":
+            print("Некорректный ввод")
     if sort_choice == "ДА" and sort_seq == "ПО УБЫВАНИЮ":
         result = sort_by_date(result, True)
-    elif sort_choice == "ДА" and sort_seq == "ПО ВОЗРАСТАНИЮ":
-        result = sort_by_date(result, False)
     else:
-        print("Некорректный ввод")
+        result = sort_by_date(result, False)
+
     print("Выводить только рублевые транзакции? Да/Нет")
-    value_choice = input().upper()
+    value_choice = ""
+    while value_choice != "ДА" and value_choice != "НЕТ":
+        value_choice = input().upper()
+        if value_choice != "ДА" and value_choice != "НЕТ":
+            print("Некорректный ввод")
+
     if value_choice == "ДА":
         result = list(filter_by_currency(result, "RUB"))
-    elif value_choice == "НЕТ":
-        pass
     else:
-        print("Некорректный ввод")
+        pass
+
     print("Отфильтровать список транзакций по определенному слову в описании? Да/Нет")
-    word_choice = input().upper()
+    word_choice = ""
+    while word_choice != "ДА" and word_choice != "НЕТ":
+        word_choice = input().upper()
+        if word_choice != "ДА" and word_choice != "НЕТ":
+            print("Некорректный ввод")
     if word_choice == "ДА":
         print("Введите слово")
         word_pattern = input()
         result = process_bank_search(result, word_pattern)
+
     if len(result) > 0:
         print(f'Всего банковских операций в выборке: ${len(result)}')
         print(result)
