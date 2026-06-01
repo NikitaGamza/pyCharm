@@ -98,7 +98,7 @@ def start():
         result = process_bank_search(result, word_pattern)
 
     if len(result) > 0:
-        print(f'Всего банковских операций в выборке: ${len(result)}')
+        print(f'Всего банковских операций в выборке: {len(result)}')
         print(*result, sep="\n")
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
