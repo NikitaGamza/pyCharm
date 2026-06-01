@@ -1,9 +1,11 @@
+import os
+from typing import Any
+
+from src.generators import filter_by_currency
+from src.process_bank import process_bank_search
+from src.processing import filter_by_state, sort_by_date
 from src.reading_files import read_csv_file, read_excel_file
 from src.utils import info_bank_operations
-from src.processing import filter_by_state, sort_by_date
-from src.process_bank import process_bank_search
-from src.generators import filter_by_currency
-import os
 
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 PATH_TO_FILE_JSON = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "operations.json")
@@ -11,46 +13,48 @@ PATH_TO_FILE_XLSX = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transaction
 PATH_TO_FILE_CSV = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions.csv")
 
 
-def choice():
-    """Главная точка входа
-    Выбирает файл с транзакциями.
-    Фильтрует по статусу, валюте и слову в описании транзакции
-    Сортирует по дате"""
+def choice() -> Any:
+    """Функция выбора файла для чтения"""
     print("""Программа: Привет! Добро пожаловать в программу работы
                 с банковскими транзакциями.
                 Выберите необходимый пункт меню:
                 1. Получить информацию о транзакциях из JSON-файла
                 2. Получить информацию о транзакциях из CSV-файла
                 3. Получить информацию о транзакциях из XLSX-файла""")
-    file_choice = int(input())
-    # if not isinstance(file_choice, int):
-    #     print("Некорректный ввод")
-    if file_choice == 1:
-        result = info_bank_operations(PATH_TO_FILE_JSON)
-        print("Программа: Для обработки выбран JSON-файл.")
-        return result
-    elif file_choice == 2:
-        result = read_csv_file(PATH_TO_FILE_CSV)
-        print("Программа: Для обработки выбран CSV-файл.")
-        return result
-    elif file_choice == 3:
-        result = read_excel_file(PATH_TO_FILE_XLSX)
-        print("Программа: Для обработки выбран XLSX-файл.")
-        return result
-    else:
-        print("Неверный ввод")
-    return 'end'
+    file_choice = 0
+    while file_choice != 1 and file_choice != 2 and file_choice != 3:
+        file_choice = int(input())
+        if file_choice == 1:
+            result = info_bank_operations(PATH_TO_FILE_JSON)
+            print("Программа: Для обработки выбран JSON-файл.")
+            return result
+        elif file_choice == 2:
+            result = read_csv_file(PATH_TO_FILE_CSV)
+            print("Программа: Для обработки выбран CSV-файл.")
+            return result
+        elif file_choice == 3:
+            result = read_excel_file(PATH_TO_FILE_XLSX)
+            print("Программа: Для обработки выбран XLSX-файл.")
+            return result
+        else:
+            print("Неверный ввод")
+    return []
 
-def start():
+
+def start() -> Any:
+    """Главная точка входа
+    Выбирает файл с транзакциями.
+    Фильтрует по статусу, валюте и слову в описании транзакции
+    Сортирует по дате"""
     result = choice()
-    print("""Введите статус, по которому необходимо выполнить фильтрацию. 
+    print("""Введите статус, по которому необходимо выполнить фильтрацию.
             Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING""")
     state_choice = ""
     while state_choice != "EXECUTED" and state_choice != "CANCELED" and state_choice != "PENDING":
         state_choice = input().upper()
         if state_choice != "EXECUTED" and state_choice != "CANCELED" and state_choice != "PENDING":
             print(f'Статус операции "{state_choice}" недоступен.')
-            print("""Введите статус, по которому необходимо выполнить фильтрацию. 
+            print("""Введите статус, по которому необходимо выполнить фильтрацию.
                 Доступные для фильтровки статусы: EXECUTED, CANCELED, PENDING
                 """)
         else:
@@ -98,10 +102,11 @@ def start():
         result = process_bank_search(result, word_pattern)
 
     if len(result) > 0:
-        print(f'Всего банковских операций в выборке: {len(result)}')
+        print(f"Всего банковских операций в выборке: {len(result)}")
         print(*result, sep="\n")
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     return result
+
 
 start()
