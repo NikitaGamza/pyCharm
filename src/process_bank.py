@@ -19,7 +19,7 @@ def process_bank_search(data: List[Dict], search: str) -> List[Dict]:
     return result
 
 
-def process_bank_operations(data: List[Dict], categories: List[Dict]) -> dict:
+def process_bank_operations(data: List[Dict], categories: List[str]) -> dict:
     """
     Функция вывода количества операций в каждой категории.
     """
