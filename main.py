@@ -6,6 +6,7 @@ from src.process_bank import process_bank_search
 from src.processing import filter_by_state, sort_by_date
 from src.reading_files import read_csv_file, read_excel_file
 from src.utils import info_bank_operations
+from src.widget import get_date, mask_account_card
 
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 PATH_TO_FILE_JSON = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "operations.json")
@@ -103,7 +104,16 @@ def start() -> Any:
 
     if len(result) > 0:
         print(f"Всего банковских операций в выборке: {len(result)}")
-        print(*result, sep="\n")
+        # print(*result, sep="\n")
+        for res in result:
+            print(f"{get_date(res['date'])} {res['description']}")
+            if "from" in res and "to" in res:
+                print(f"{mask_account_card(res['from'])} -> {mask_account_card(res['to'])}")
+            elif "from" in res:
+                print(f"{mask_account_card(res['from'])}")
+            elif "to" in res:
+                print(f"{mask_account_card(res['to'])}")
+            print(f"Сумма: {res['operationAmount']['amount']} {res['operationAmount']['currency']['name']} \n")
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     return result
