@@ -10,7 +10,7 @@ def mask_account_card(acc_info: str) -> str | None:
         else:
             return f"Счет {masked}"
     else:
-        slice_num = int(acc_info[-16:])
+        slice_num = acc_info[-16:]
         masked = get_mask_card_number(slice_num)
         if masked is None:
             return None

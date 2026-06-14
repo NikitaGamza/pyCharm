@@ -108,12 +108,13 @@ def start() -> Any:
         for res in result:
             print(f"{get_date(res['date'])} {res['description']}")
             if "from" in res and "to" in res:
-                print(f"{mask_account_card(res['from'])} -> {mask_account_card(res['to'])}")
+                print(f"{mask_account_card(res.get('from'))} -> {mask_account_card(res.get('to'))}")
             elif "from" in res:
                 print(f"{mask_account_card(res['from'])}")
             elif "to" in res:
-                print(f"{mask_account_card(res['to'])}")
-            print(f"Сумма: {res['operationAmount']['amount']} {res['operationAmount']['currency']['name']} \n")
+                print(f"{mask_account_card(res.get('to'))}")
+            if 'operationAmount' in res:
+                print(f"Сумма: {res['operationAmount']['amount']} {res['operationAmount']['currency']['name']} \n")
     else:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
     return result
