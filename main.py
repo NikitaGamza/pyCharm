@@ -12,29 +12,37 @@ PATH_TO_FILE_JSON = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "operations.
 PATH_TO_FILE_XLSX = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions_excel.xlsx")
 PATH_TO_FILE_CSV = os.path.join(ROOT_DIR, "HomeWork9and1", "data", "transactions.csv")
 
+
 class Product:
     """Класс продукции"""
+
     name: str
     description: str
     price: float
     quantity: int
+
     def __init__(self, name: str, description: str, price: float, quantity: int):
         self.name = name
         self.description = description
         self.price = price
         self.quantity = quantity
 
+
 class Category:
     """Класс категорий продукта"""
+
     name: str
     description: str
     products: List[Product]
     category_count: int = 0
+
     def __init__(self, name: str, description: str, products: Optional[List[Product]] = None) -> None:
         self.name = name
         self.description = description
         self.products = products if products is not None else []
         Category.category_count += 1
+        Category.product_count += len(self.products)
+
     def product_count(self):
         return len(self.products)
 
@@ -136,12 +144,12 @@ def start() -> Any:
 
 
 # start()
-# prod1 = Product("Кровать", "Мягкая", 100.5, 12)
-# prod2 = Product("Кровать", "Большая", 120.0, 13)
-# cat1 = Category("Спальня", "товары для сна", [prod1, prod2])
-# cat2 = Category("Сантехника", "товары для сантехники", [prod1, prod2])
-# cat3 = Category("Смартфоны", "товары для сантехники", [prod1, prod2])
+prod1 = Product("Кровать", "Мягкая", 100.5, 12)
+prod2 = Product("Кровать", "Большая", 120.0, 13)
+cat1 = Category("Спальня", "товары для сна", [prod1, prod2])
+cat2 = Category("Сантехника", "товары для сантехники", [prod1, prod2])
+cat3 = Category("Смартфоны", "товары для сантехники", [prod1, prod2])
 # print(cat1.name)
 # print(cat1.description)
-# print(cat1.category_count)
+print(cat1.category_count)
 # print(cat3.products[0].name)
